@@ -6,7 +6,25 @@
         xmlns:local="clr-namespace:platform.AuthMicroservices.view"
         mc:Ignorable="d"
         Title="Вход в систему" Height="450" Width="800">
-    <Grid>
-        
+    <Grid Margin="10px 0 0 0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40px"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Text="Вход в систему" FontSize="20px" FontWeight="Bold" />
+        <Grid Grid.Row="1">
+            <WrapPanel Orientation="Vertical">
+                <StackPanel>
+                    <Label x:Name="LabelLogin" Target="{Binding ElementName=InputLogin}" Content="Введите логин" MouseLeftButtonUp="LabelMouseLeftButtonUp" />
+                    <TextBox FontSize="16px" x:Name="InputLogin" Width="250px"></TextBox>
+                </StackPanel>
+                <StackPanel>
+                    <Label Target="{Binding ElementName=InputPassword}" Content="Введите пароль" MouseLeftButtonUp="LabelMouseLeftButtonUp" />
+                    <PasswordBox FontSize="16px" x:Name="InputPassword" Width="250px" Margin="0 0 0 10px"></PasswordBox>
+                </StackPanel>
+                <Button Content="Вход" x:Name="Button" Width="80px" Height="26px" Click="ButtonClick"></Button>
+            </WrapPanel>
+  
+        </Grid>
     </Grid>
 </Window>
