@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="platform.AuthMicroservices.component.AuthInput"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:platform.AuthMicroservices.component"
+             mc:Ignorable="d"
+             x:Name="AuthInputUserComponent"
+             >
+    <Grid>
+        <StackPanel>
+            <Label 
+                x:Name="label" 
+                Target="{Binding ElementName = input }" 
+                Content="{ Binding ElementName = AuthInputUserComponent, Path = LabelText }"
+                MouseLeftButtonUp="LabelMouseLeftButtonUp"
+            />
+            <TextBox 
+                FontSize="16px" 
+                x:Name="input" Width="250px" 
+            />
+            <TextBlock x:Name="TextErrorNullLogin" Visibility="Collapsed" Text="Вы не указали логин" Foreground="Red"></TextBlock>
+        </StackPanel>
+    </Grid>
+</UserControl>
