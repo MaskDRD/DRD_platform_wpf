@@ -15,16 +15,17 @@
         <Grid Grid.Row="1">
             <WrapPanel Orientation="Vertical">
                 <StackPanel>
-                    <Label x:Name="LabelLogin" Target="{Binding ElementName=InputLogin}" Content="Введите логин" MouseLeftButtonUp="LabelMouseLeftButtonUp" />
-                    <TextBox FontSize="16px" x:Name="InputLogin" Width="250px"></TextBox>
+                    <Label x:Name="LabelLogin" Target="{Binding ElementName=InputLogin}" Content="* Введите логин" MouseLeftButtonUp="LabelMouseLeftButtonUp" />
+                    <TextBox FontSize="16px" x:Name="InputLogin" Width="250px" TextChanged="InputLoginFocusableChanged"/>
+                    <TextBlock x:Name="TextErrorNullLogin" Visibility="Collapsed" Text="Вы не указали логин" Foreground="Red"></TextBlock>
                 </StackPanel>
-                <StackPanel>
-                    <Label Target="{Binding ElementName=InputPassword}" Content="Введите пароль" MouseLeftButtonUp="LabelMouseLeftButtonUp" />
-                    <PasswordBox FontSize="16px" x:Name="InputPassword" Width="250px" Margin="0 0 0 10px"></PasswordBox>
+                <StackPanel Margin="0 0 0 10px">
+                    <Label Target="{Binding ElementName=InputPassword}" Content="* Введите пароль" MouseLeftButtonUp="LabelMouseLeftButtonUp" />
+                    <PasswordBox FontSize="16px" x:Name="InputPassword" Width="250px" PasswordChanged="InputPasswordPasswordChanged"></PasswordBox>
+                    <TextBlock x:Name="TextErrorNullPassword"  Visibility="Collapsed" Text="Вы не указали пароль"  Foreground="Red"></TextBlock>
                 </StackPanel>
                 <Button Content="Вход" x:Name="Button" Width="80px" Height="26px" Click="ButtonClick"></Button>
             </WrapPanel>
-  
         </Grid>
     </Grid>
 </Window>
