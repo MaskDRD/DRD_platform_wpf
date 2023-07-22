@@ -26,7 +26,7 @@ namespace platform.AuthMicroservices.component
 
         public string value
         {
-            get { return input.Text; }
+            get { return Input.Text; }
         }
 
         /// <summary>

@@ -11,15 +11,15 @@
         <StackPanel>
             <Label 
                 x:Name="label" 
-                Target="{Binding ElementName = input }" 
+                Target="{Binding ElementName = Input }" 
                 Content="{ Binding ElementName = AuthInputUserComponent, Path = LabelText }"
                 MouseLeftButtonUp="LabelMouseLeftButtonUp"
             />
             <TextBox 
                 FontSize="16px" 
-                x:Name="input" Width="250px" 
+                x:Name="Input" Width="250px" 
             />
-            <TextBlock x:Name="TextErrorNullLogin" Visibility="Collapsed" Text="Вы не указали логин" Foreground="Red"></TextBlock>
+            <TextBlock x:Name="TextError" Visibility="Collapsed" Text="Вы не указали логин" Foreground="Red"></TextBlock>
         </StackPanel>
     </Grid>
 </UserControl>
