@@ -110,7 +110,13 @@ namespace platform.AuthMicroservices.component
         /// </summary>
         public string Value
         {
-            get { return Input.Text; }
+            get {
+                if(AuthComponentParams.Equals(AuthComponent.Password))
+                {
+                    return Password.Password;
+                }
+                return Input.Text;
+            }
         }
 
         /// <summary>
