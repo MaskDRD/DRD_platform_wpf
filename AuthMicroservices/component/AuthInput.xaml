@@ -4,35 +4,36 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d"
-             x:Name="AuthInputUserComponent"
+             x:Name="AuthInputUserComponent" 
+             Loaded="AuthInputUserComponentLoaded"
              >
-    <Grid>
-        <StackPanel>
-            <Label 
+    <StackPanel>
+        <Label 
                 x:Name="label" 
                 Target="{Binding ElementName = Input }" 
                 Content="{ Binding ElementName = AuthInputUserComponent, Path = LabelText }"
                 MouseLeftButtonUp="LabelMouseLeftButtonUp"
             />
-            
-            <TextBox 
+
+        <TextBox 
                 FontSize="16px" 
                 x:Name="Input" Width="250px" 
                 TextChanged="InputTextChanged"
+                Visibility="Collapsed" 
             />
 
-            <PasswordBox 
+        <PasswordBox 
                 FontSize="16px" 
                 x:Name="Password" Width="250px" 
                 PasswordChanged="PasswordChanged"
+                Visibility="Collapsed" 
             />
-            
-            <TextBlock 
+
+        <TextBlock 
                 x:Name="TextError" 
                 Visibility="Collapsed" 
                 Text="{ Binding ElementName = AuthInputUserComponent, Path = ErrorReqText }" 
                 Foreground="Red"
             />
-        </StackPanel>
-    </Grid>
+    </StackPanel>
 </UserControl>

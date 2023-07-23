@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using platform.AuthMicroservices.enums;
+using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -13,6 +15,20 @@ namespace platform.AuthMicroservices.component
         {
             InitializeComponent();
         }
+
+        public static readonly DependencyProperty AuthComponentProperty = DependencyProperty.Register(
+            "AuthComponentParams",
+            typeof(AuthComponent),
+            typeof(AuthInput),
+            new PropertyMetadata(AuthComponent.Input)
+        );
+
+        public AuthComponent AuthComponentParams
+        {
+            get { return (AuthComponent)GetValue(AuthComponentProperty); }
+            set {  SetValue(AuthComponentProperty, value); }
+        }
+
 
         /// <summary>
         /// DependencyProperty зависимость текстовка у label
@@ -71,7 +87,7 @@ namespace platform.AuthMicroservices.component
         /// <param name="val"></param>
         private void ChangedTextError(string val)
          {
-            if (Input.Text == "" && ErrorReqText != null)
+            if (val == "" && ErrorReqText != null)
             {
                 TextError.Visibility = Visibility.Visible;
                 return;
@@ -102,9 +118,28 @@ namespace platform.AuthMicroservices.component
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void PasswordChanged(object sender, TextChangedEventArgs e)
+        private void PasswordChanged(object sender, RoutedEventArgs e)
         {
             ChangedTextError(Password.Password);
+        }
+
+        /// <summary>
+        /// Загрузка экрана прошла успешно
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AuthInputUserComponentLoaded(object sender, RoutedEventArgs e)
+        {
+            if (AuthComponentParams.Equals(AuthComponent.Input))
+            {
+                Input.Visibility = Visibility.Visible;
+                return;
+            }
+
+            if (AuthComponentParams.Equals(AuthComponent.Password))
+            {
+                Password.Visibility = Visibility.Visible;
+            }
         }
     }
 }

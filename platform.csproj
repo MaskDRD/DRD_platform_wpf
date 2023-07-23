@@ -55,6 +55,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AuthMicroservices\component\AuthInput.xaml.cs">
+      <DependentUpon>AuthInput.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AuthMicroservices\component\AuthTitle.xaml.cs">
+      <DependentUpon>AuthTitle.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AuthMicroservices\enums\AuthComponent.cs" />
     <Compile Include="AuthMicroservices\view\AuthorizationWindow.xaml.cs">
       <DependentUpon>AuthorizationWindow.xaml</DependentUpon>
     </Compile>
@@ -62,6 +69,14 @@
       <DependentUpon>RegistrationWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="UtlMicroservices\Singleton.cs" />
+    <Page Include="AuthMicroservices\component\AuthInput.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AuthMicroservices\component\AuthTitle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="AuthMicroservices\view\AuthorizationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
