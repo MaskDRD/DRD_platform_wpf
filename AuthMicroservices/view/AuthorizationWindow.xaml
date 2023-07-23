@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:platform.AuthMicroservices.view"
+        xmlns:com="clr-namespace:platform.AuthMicroservices.component"
         mc:Ignorable="d"
         Title="Вход в систему" Height="450" Width="800">
     <Grid Margin="10px 0 0 0">
@@ -11,20 +11,22 @@
             <RowDefinition Height="40px"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Text="Вход в систему" FontSize="20px" FontWeight="Bold" />
-        <Grid Grid.Row="1">
+        <com:AuthTitle Title="Вход в систему"/>
+         <Grid Grid.Row="1">
             <WrapPanel Orientation="Vertical">
-                <StackPanel>
-                    <Label x:Name="LabelLogin" Target="{Binding ElementName=InputLogin}" Content="* Введите логин" MouseLeftButtonUp="LabelMouseLeftButtonUp" />
-                    <TextBox FontSize="16px" x:Name="InputLogin" Width="250px" TextChanged="InputLoginFocusableChanged"/>
-                    <TextBlock x:Name="TextErrorNullLogin" Visibility="Collapsed" Text="Вы не указали логин" Foreground="Red"></TextBlock>
-                </StackPanel>
-                <StackPanel Margin="0 0 0 10px">
-                    <Label Target="{Binding ElementName=InputPassword}" Content="* Введите пароль" MouseLeftButtonUp="LabelMouseLeftButtonUp" />
-                    <PasswordBox FontSize="16px" x:Name="InputPassword" Width="250px" PasswordChanged="InputPasswordPasswordChanged"></PasswordBox>
-                    <TextBlock x:Name="TextErrorNullPassword"  Visibility="Collapsed" Text="Вы не указали пароль"  Foreground="Red"></TextBlock>
-                </StackPanel>
-                <Button Content="Вход" x:Name="Button" Width="80px" Height="26px" Click="ButtonClick"></Button>
+                <com:AuthInput 
+                    AuthComponentParams="Input"
+                    LabelText="* Введите логин" 
+                    ErrorReqText="Вы не указали логин" 
+                    x:Name="Login"
+                />
+                <com:AuthInput 
+                    AuthComponentParams="Password"
+                    LabelText="* Введите пароль" 
+                    ErrorReqText="Вы не указали пароль" 
+                    x:Name="Password"
+                />
+                <Button Margin="0 10px 0 0" Content="Вход" x:Name="Button" Width="80px" Height="26px" Click="ButtonClick"></Button>
             </WrapPanel>
         </Grid>
     </Grid>

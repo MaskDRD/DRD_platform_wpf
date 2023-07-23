@@ -1,7 +1,8 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
+ 
 
 namespace platform.AuthMicroservices.view
 {
@@ -15,36 +16,16 @@ namespace platform.AuthMicroservices.view
             InitializeComponent();
         }
 
-
-        private void LabelMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            Label label = (Label)sender;
-            if (e.ClickCount == 1 && label.Target != null)
-            {
-                Keyboard.Focus(label.Target);
-            }
-        }
-
         private void ButtonClick(object sender, RoutedEventArgs e)
         {
-            if(InputLogin.Text == "")
+           if(Login.Value == "")
             {
-                TextErrorNullLogin.Visibility = Visibility.Visible;
+                Login.UpdateVisibleTextError();
             }
-
-            if(InputPassword.Password == "") { 
-                TextErrorNullPassword.Visibility = Visibility.Visible;
+            if (Password.Value == "")
+            {
+                Password.UpdateVisibleTextError();
             }
-        }
-
-        private void InputLoginFocusableChanged(object sender, TextChangedEventArgs e)
-        {
-            TextErrorNullLogin.Visibility = Visibility.Collapsed;
-        }
-
-        private void InputPasswordPasswordChanged(object sender, RoutedEventArgs e)
-        {
-            TextErrorNullPassword.Visibility = Visibility.Collapsed;
         }
     }
 }
