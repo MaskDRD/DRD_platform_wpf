@@ -9,6 +9,11 @@ namespace platform.AuthMicroservices.component
     /// </summary>
     public partial class AuthInput : UserControl
     {
+        public AuthInput()
+        {
+            InitializeComponent();
+        }
+
         /// <summary>
         /// DependencyProperty зависимость текстовка у label
         /// </summary>
@@ -39,10 +44,12 @@ namespace platform.AuthMicroservices.component
             set { SetValue(ErrorReqTextProperty, value); }
         }
 
-
-        public string value
+        /// <summary>
+        /// Сигнал что нужно проверить валидацию
+        /// </summary>
+        public void UpdateVisibleTextError()
         {
-            get { return Input.Text; }
+            TextError.Visibility = Visibility.Visible;
         }
 
         /// <summary>
@@ -58,43 +65,46 @@ namespace platform.AuthMicroservices.component
                 Keyboard.Focus(label.Target);
             }
         }
-
-        public AuthInput()
-        {
-            InitializeComponent();
-        }
-
         /// <summary>
-        /// Фокус на элемент
-        /// 1. обработка обязательности поля
+        /// проверяет и скрывает ошибку на обязательность поля если она не актуальна
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void InputFocusableChanged(object sender, RoutedEventArgs e)
-        {
+        /// <param name="val"></param>
+        private void ChangedTextError(string val)
+         {
             if (Input.Text == "" && ErrorReqText != null)
             {
                 TextError.Visibility = Visibility.Visible;
+                return;
             }
+            TextError.Visibility = Visibility.Collapsed;
         }
 
         /// <summary>
-        /// изменения значения в элемент
-        /// 1. проверяет и скрывает ошибку на обязательность поля если она не актуальна
+        /// изменения значения в элемент input
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void InputTextChanged(object sender, TextChangedEventArgs e)
         {
-            if (Input.Text != "")
-            {
-                TextError.Visibility = Visibility.Collapsed;
-            }
+            ChangedTextError(Input.Text);
+        }
 
-            else if (Input.Text == "" && ErrorReqText != null)
-            {
-                TextError.Visibility = Visibility.Visible;
-            }
+        /// <summary>
+        /// Получить значения с input
+        /// </summary>
+        public string Value
+        {
+            get { return Input.Text; }
+        }
+
+        /// <summary>
+        /// изменения значения в элемент password
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void PasswordChanged(object sender, TextChangedEventArgs e)
+        {
+            ChangedTextError(Password.Password);
         }
     }
 }

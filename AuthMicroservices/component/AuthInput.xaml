@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:platform.AuthMicroservices.component"
              mc:Ignorable="d"
              x:Name="AuthInputUserComponent"
              >
@@ -15,12 +14,19 @@
                 Content="{ Binding ElementName = AuthInputUserComponent, Path = LabelText }"
                 MouseLeftButtonUp="LabelMouseLeftButtonUp"
             />
+            
             <TextBox 
                 FontSize="16px" 
                 x:Name="Input" Width="250px" 
-                GotFocus="InputFocusableChanged"
                 TextChanged="InputTextChanged"
             />
+
+            <PasswordBox 
+                FontSize="16px" 
+                x:Name="Password" Width="250px" 
+                PasswordChanged="PasswordChanged"
+            />
+            
             <TextBlock 
                 x:Name="TextError" 
                 Visibility="Collapsed" 
