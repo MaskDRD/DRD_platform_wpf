@@ -1,32 +1,34 @@
-﻿namespace platform.BdMicroservices.Model
+﻿using System.Collections.Generic;
+
+namespace platform.BdMicroservices.model
 {
     class SqlModel
     {
-        public SqlModel(string sql) { 
-            Sql = sql;
+        public SqlModel(string name) {
+            Name = name;
         }
 
         public SqlModel(
-            string sql,
-            SqlParamsModel paramsIn
+            string name,
+            List<SqlParamsInModel> paramsIn
         ) {
-            Sql = sql;
+            Name = name;
             ParamsIn = paramsIn;
         }
 
         public SqlModel(
-            string sql,
-            SqlParamsModel paramsIn,
-            SqlParamsModel paramsOut
+            string name,
+            List<SqlParamsInModel> paramsIn,
+            List<SqlParamsOutModel> paramsOut
         ) {
-            Sql = sql;
+            Name = name;
             ParamsIn = paramsIn;
             ParamsOut = paramsOut;
         }
 
-        public string Sql { get; set; }
+        public string Name { get; set; }
 
-        public SqlParamsModel ParamsIn { get; set; }
-        public SqlParamsModel ParamsOut { get; set; }
+        public List<SqlParamsInModel> ParamsIn { get; set; }
+        public List<SqlParamsOutModel> ParamsOut { get; set; }
     }
 }

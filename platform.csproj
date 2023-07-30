@@ -92,7 +92,11 @@
     <Compile Include="AuthMicroservices\view\RegistrationWindow.xaml.cs">
       <DependentUpon>RegistrationWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="BdMicroservices\Cache\BdConnectCache.cs" />
+    <Compile Include="BdMicroservices\cache\BdConnectCache.cs" />
+    <Compile Include="BdMicroservices\model\SqlModel.cs" />
+    <Compile Include="BdMicroservices\model\SqlParamsInModel.cs" />
+    <Compile Include="BdMicroservices\model\SqlParamsOutModel.cs" />
+    <Compile Include="BdMicroservices\service\BdMySqlService.cs" />
     <Compile Include="UtlMicroservices\Singleton.cs" />
     <Page Include="AuthMicroservices\component\AuthInput.xaml">
       <SubType>Designer</SubType>
