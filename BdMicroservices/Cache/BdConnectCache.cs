@@ -1,15 +1,14 @@
 ﻿using MySqlConnector;
+using platform.BdMicroservices.service;
 using platform.UtlMicroservices;
-using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Data.Common;
 
 namespace platform.BdMicroservices.Cache
 {
     sealed class BdConnectCache: Singleton<BdConnectCache>
     {
-        public Dictionary<string, DbConnection> connectBd = new Dictionary<string, DbConnection>();
+        public Dictionary<string, BdService> connectBd = new Dictionary<string, BdService>();
         public BdConnectCache()
         {
             ConnectionStringSettingsCollection connectionStringSettingsCollection = ConfigurationManager.ConnectionStrings;
@@ -19,7 +18,8 @@ namespace platform.BdMicroservices.Cache
                 {
                     case "MySql.Data.MySqlClient":
                         MySqlConnection mySqlConnection = new MySqlConnection(connectionStringSettings.ConnectionString);
-                        connectBd.Add(connectionStringSettings.Name, mySqlConnection);
+                        BdMySqlService bdMySqlService = new BdMySqlService(mySqlConnection);
+                        connectBd.Add(connectionStringSettings.Name, bdMySqlService);
                         break;
                 }
             }

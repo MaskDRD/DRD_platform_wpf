@@ -1,14 +1,13 @@
 ﻿using platform.BdMicroservices.model;
 
 using MySqlConnector;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlTypes;
 
 namespace platform.BdMicroservices.service
 {
-    class BdMySqlService
+    class BdMySqlService: BdService
     {
         private MySqlConnection DbConnection { get; }
 
@@ -18,7 +17,7 @@ namespace platform.BdMicroservices.service
             DbConnection.Open();
         }
 
-        public DataTable GetTablesSql(SqlModel sqlModel, Dictionary<string, object> body)
+        public override DataTable GetTablesSql(SqlModel sqlModel, Dictionary<string, object> body)
         {
             DataTable dataTable = new DataTable();
             MySqlDataAdapter adapter = initSqlDataAdapter(sqlModel);
@@ -30,7 +29,7 @@ namespace platform.BdMicroservices.service
             return dataTable;
         }
 
-        public Dictionary<string, object> GetDictionarySql(SqlModel sqlModel, Dictionary<string, object> body)
+        public override Dictionary<string, object> GetDictionarySql(SqlModel sqlModel, Dictionary<string, object> body)
         {
             List<MySqlParameter> outputParam = new List<MySqlParameter>();
             MySqlDataAdapter adapter = initSqlDataAdapter(sqlModel);
