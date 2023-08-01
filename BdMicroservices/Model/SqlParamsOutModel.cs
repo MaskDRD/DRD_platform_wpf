@@ -2,14 +2,14 @@
 
 namespace platform.BdMicroservices.model
 {
-    class SqlParamsOutModel
+    class SqlParamsOutModel<T>
     {
-        public SqlParamsOutModel(string name, MySqlDbType type) {
+        public SqlParamsOutModel(string name, T type) {
             Name = name;
             Type = type;
         } 
 
         public string Name { get; set; }
-        public MySqlDbType Type { get; set; }
+        public T Type { get; set; }
     }
 }

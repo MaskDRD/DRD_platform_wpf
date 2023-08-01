@@ -96,6 +96,7 @@
     <Compile Include="BdMicroservices\model\SqlModel.cs" />
     <Compile Include="BdMicroservices\model\SqlParamsInModel.cs" />
     <Compile Include="BdMicroservices\model\SqlParamsOutModel.cs" />
+    <Compile Include="BdMicroservices\service\BdService.cs" />
     <Compile Include="BdMicroservices\service\BdMySqlService.cs" />
     <Compile Include="UtlMicroservices\Singleton.cs" />
     <Page Include="AuthMicroservices\component\AuthInput.xaml">

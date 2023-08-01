@@ -2,7 +2,7 @@
 
 namespace platform.BdMicroservices.model
 {
-    class SqlModel
+    class SqlModel<T>
     {
         public SqlModel(string name) {
             Name = name;
@@ -19,7 +19,7 @@ namespace platform.BdMicroservices.model
         public SqlModel(
             string name,
             List<SqlParamsInModel> paramsIn,
-            List<SqlParamsOutModel> paramsOut
+            List<SqlParamsOutModel<T>> paramsOut
         ) {
             Name = name;
             ParamsIn = paramsIn;
@@ -29,6 +29,6 @@ namespace platform.BdMicroservices.model
         public string Name { get; set; }
 
         public List<SqlParamsInModel> ParamsIn { get; set; }
-        public List<SqlParamsOutModel> ParamsOut { get; set; }
+        public List<SqlParamsOutModel<T>> ParamsOut { get; set; }
     }
 }

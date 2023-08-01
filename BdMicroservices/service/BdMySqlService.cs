@@ -17,10 +17,10 @@ namespace platform.BdMicroservices.service
             DbConnection.Open();
         }
 
-        public override DataTable GetTablesSql(SqlModel sqlModel, Dictionary<string, object> body)
+        public override DataTable GetTablesSql(SqlModel<MySqlDbType> sqlModel, Dictionary<string, object> body)
         {
             DataTable dataTable = new DataTable();
-            MySqlDataAdapter adapter = initSqlDataAdapter(sqlModel);
+            MySqlDataAdapter adapter = InitSqlDataAdapter(sqlModel);
             if (sqlModel.ParamsIn.Count != 0)
             {
                 SetInParams(sqlModel, body, adapter);
@@ -29,10 +29,10 @@ namespace platform.BdMicroservices.service
             return dataTable;
         }
 
-        public override Dictionary<string, object> GetDictionarySql(SqlModel sqlModel, Dictionary<string, object> body)
+        public override Dictionary<string, object> GetDictionarySql(SqlModel<MySqlDbType> sqlModel, Dictionary<string, object> body)
         {
             List<MySqlParameter> outputParam = new List<MySqlParameter>();
-            MySqlDataAdapter adapter = initSqlDataAdapter(sqlModel);
+            MySqlDataAdapter adapter = InitSqlDataAdapter(sqlModel);
 
             if (sqlModel.ParamsOut.Count != 0)
             {
@@ -48,7 +48,7 @@ namespace platform.BdMicroservices.service
             return SetResultDictionary(outputParam);
         }
 
-        private MySqlDataAdapter initSqlDataAdapter(SqlModel sqlModel)
+        private MySqlDataAdapter InitSqlDataAdapter(SqlModel<MySqlDbType> sqlModel)
         {
             MySqlDataAdapter adapter = new MySqlDataAdapter
             {
@@ -68,10 +68,10 @@ namespace platform.BdMicroservices.service
             return result;
         }
 
-        private List<MySqlParameter> SetOutParams(SqlModel sqlModel, MySqlDataAdapter adapter)
+        private List<MySqlParameter> SetOutParams(SqlModel<MySqlDbType> sqlModel, MySqlDataAdapter adapter)
         {
             List<MySqlParameter> outputParam = new List<MySqlParameter>();
-            foreach (SqlParamsOutModel paramsOut in sqlModel.ParamsOut)
+            foreach (SqlParamsOutModel<MySqlDbType> paramsOut in sqlModel.ParamsOut)
             {
                 MySqlParameter mySqlParameter = new MySqlParameter(paramsOut.Name, paramsOut.Type)
                 {
@@ -84,7 +84,7 @@ namespace platform.BdMicroservices.service
         }
 
         private void SetInParams(
-            SqlModel sqlModel, 
+            SqlModel<MySqlDbType> sqlModel, 
             Dictionary<string, object> body,
             MySqlDataAdapter adapter
         )
