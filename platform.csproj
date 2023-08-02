@@ -85,7 +85,9 @@
     <Compile Include="AuthMicroservices\component\AuthTitle.xaml.cs">
       <DependentUpon>AuthTitle.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AuthMicroservices\config\AuthConfigBd.cs" />
     <Compile Include="AuthMicroservices\enums\AuthComponent.cs" />
+    <Compile Include="AuthMicroservices\service\AuthService.cs" />
     <Compile Include="AuthMicroservices\view\AuthorizationWindow.xaml.cs">
       <DependentUpon>AuthorizationWindow.xaml</DependentUpon>
     </Compile>
@@ -98,6 +100,7 @@
     <Compile Include="BdMicroservices\model\SqlParamsOutModel.cs" />
     <Compile Include="BdMicroservices\service\BdService.cs" />
     <Compile Include="BdMicroservices\service\BdMySqlService.cs" />
+    <Compile Include="UtlMicroservices\ErrorText.cs" />
     <Compile Include="UtlMicroservices\Singleton.cs" />
     <Page Include="AuthMicroservices\component\AuthInput.xaml">
       <SubType>Designer</SubType>
