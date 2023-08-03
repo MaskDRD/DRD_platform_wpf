@@ -33,9 +33,9 @@ namespace platform.AuthMicroservices.service
             return Convert.ToBase64String(hash);
         }
 
-        public void Register(Dictionary<string, object> body) {
-            Dictionary<string, object> userCheck = bdMySqlService.GetDictionarySql(AuthConfigBd.UserCheck(), body);
+        private List<string> CheckUser(Dictionary<string, object> body) {
             List<string> errors = new List<string>();
+            Dictionary<string, object> userCheck = bdMySqlService.GetDictionarySql(AuthConfigBd.UserCheck(), body);
             if ((Boolean)userCheck["check_login_"] == false)
             {
                 errors.Add(ErrorText.UserLoginUnique());
@@ -45,16 +45,46 @@ namespace platform.AuthMicroservices.service
             {
                 errors.Add(ErrorText.UserEmailUnique());
             }
-                
+
             if ((Boolean)userCheck["check_nik_"] == false)
             {
                 errors.Add(ErrorText.UserNikUnique());
             }
+            return errors;
+        }
 
-            if(errors.Count == 0)
+        public void Register(string login, string password, string nik, string email) {
+            // подготовка данных;
+            Dictionary<string, object> body = new Dictionary<string, object>() 
+            {
+                { "login", login},
+                { "email", email },
+                { "nik", nik }
+                
+            };
+            // проверка валидации при регистрации
+            List<string> errors = CheckUser(body);
+            if (errors.Count == 0)
             {
                 Console.WriteLine(errors);
+                return;
             }
+            // функционал создания пользователя
+            body["password"] = HashPassword(password);
+            Dictionary<string, object> userCreate = bdMySqlService.GetDictionarySql(AuthConfigBd.UserCreate(), body);
+            int id_user = (int)userCreate["id"];
+            // функционал создания токена  
+            string token = GenerateToken(id_user);
+            Dictionary<string, object> bodyToken = new Dictionary<string, object>
+            {
+                { "value", token },
+                { "id_user", id_user }
+            };
+            Dictionary<string, object> tokenCreate = bdMySqlService.GetDictionarySql(AuthConfigBd.TokenCreate(), bodyToken);
+
+            Dictionary<string, object> userGetWhereTokenId = bdMySqlService.GetDictionarySql(AuthConfigBd.UserGetWhereTokenId(), tokenCreate);
+            Console.WriteLine(userGetWhereTokenId);
+
             // 1. запрос к бд UserCheck 
             // 2. свободны ли значения уникальных полей.
             // 2.1 заняты и вывести ошибки.
