@@ -33,22 +33,44 @@ namespace platform.AuthMicroservices.service
             return Convert.ToBase64String(hash);
         }
 
-        private List<string> CheckUser(Dictionary<string, object> body) {
+        private List<string> CheckUserCreate(Dictionary<string, object> body) {
             List<string> errors = new List<string>();
             Dictionary<string, object> userCheck = bdMySqlService.GetDictionarySql(AuthConfigBd.UserCheck(), body);
-            if ((Boolean)userCheck["check_login_"] == false)
+            if ((bool)userCheck["check_login_"] == true)
             {
                 errors.Add(ErrorText.UserLoginUnique());
             }
 
-            if ((Boolean)userCheck["check_email_"] == false)
+            if ((bool)userCheck["check_email_"] == true)
             {
                 errors.Add(ErrorText.UserEmailUnique());
             }
 
-            if ((Boolean)userCheck["check_nik_"] == false)
+            if ((bool)userCheck["check_nik_"] == true)
             {
                 errors.Add(ErrorText.UserNikUnique());
+            }
+            return errors;
+        }
+        
+        private List<string> CheckUserGet(DateTime dateToken, Boolean checkActive, Boolean CheckConfEmail, int userId) 
+        {
+            List<string> errors = new List<string>();
+            if(userId > 0)
+            {
+                errors.Add(ErrorText.TokenNotValid());
+            }
+            if (checkActive)
+            {
+                errors.Add(ErrorText.UserNotActive());
+            }
+            if (CheckConfEmail)
+            {
+                errors.Add(ErrorText.UserNotConfEmail());
+            }
+            if (dateToken < DateTime.Now)
+            {
+                errors.Add(ErrorText.TokenTimeNoValid());
             }
             return errors;
         }
@@ -63,8 +85,8 @@ namespace platform.AuthMicroservices.service
                 
             };
             // проверка валидации при регистрации
-            List<string> errors = CheckUser(body);
-            if (errors.Count == 0)
+            List<string> errors = CheckUserCreate(body);
+            if (errors.Count != 0)
             {
                 Console.WriteLine(errors);
                 return;
@@ -83,8 +105,17 @@ namespace platform.AuthMicroservices.service
             Dictionary<string, object> tokenCreate = bdMySqlService.GetDictionarySql(AuthConfigBd.TokenCreate(), bodyToken);
 
             Dictionary<string, object> userGetWhereTokenId = bdMySqlService.GetDictionarySql(AuthConfigBd.UserGetWhereTokenId(), tokenCreate);
-            Console.WriteLine(userGetWhereTokenId);
-
+            List<string> errorsUser =  CheckUserGet(
+                (DateTime)userGetWhereTokenId["token_date"],
+                (bool)userGetWhereTokenId["check_active"],
+                (bool)userGetWhereTokenId["check_conf_email"], 
+                (int)userGetWhereTokenId["id"]
+                );
+            if (errorsUser.Count != 0)
+            {
+                Console.WriteLine(errorsUser);
+                return;
+            }
             // 1. запрос к бд UserCheck 
             // 2. свободны ли значения уникальных полей.
             // 2.1 заняты и вывести ошибки.

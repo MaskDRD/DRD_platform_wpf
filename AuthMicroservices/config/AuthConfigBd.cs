@@ -66,19 +66,7 @@ namespace platform.AuthMicroservices.config
                 new SqlParamsInModel("_token_id", "id"),
             };
 
-            List<SqlParamsOutModel<MySqlDbType>> sqlParamsOutModel = new List<SqlParamsOutModel<MySqlDbType>>()
-            {
-                new SqlParamsOutModel<MySqlDbType>("id", MySqlDbType.Int64),
-                new SqlParamsOutModel<MySqlDbType>("login", MySqlDbType.String),
-                new SqlParamsOutModel<MySqlDbType>("email", MySqlDbType.String),
-                new SqlParamsOutModel<MySqlDbType>("nik", MySqlDbType.String),
-                new SqlParamsOutModel<MySqlDbType>("check_active", MySqlDbType.Bool),
-                new SqlParamsOutModel<MySqlDbType>("check_conf_email", MySqlDbType.Bool),
-                new SqlParamsOutModel<MySqlDbType>("token_id", MySqlDbType.String),
-                new SqlParamsOutModel<MySqlDbType>("token_value", MySqlDbType.String),
-                new SqlParamsOutModel<MySqlDbType>("token_date", MySqlDbType.Date),
-            };
-            SqlModel<MySqlDbType> sqlModel = new SqlModel<MySqlDbType>("UserGetWhereTokenId", sqlParamsInModel, sqlParamsOutModel);
+            SqlModel<MySqlDbType> sqlModel = new SqlModel<MySqlDbType>("UserGetWhereTokenId", sqlParamsInModel);
             return sqlModel;
         }
     }
