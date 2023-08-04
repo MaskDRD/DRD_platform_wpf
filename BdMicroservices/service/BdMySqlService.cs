@@ -3,7 +3,8 @@
 using MySqlConnector;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlTypes;
+using System.Runtime.Remoting.Messaging;
+using System;
 
 namespace platform.BdMicroservices.service
 {
@@ -34,7 +35,7 @@ namespace platform.BdMicroservices.service
             List<MySqlParameter> outputParam = new List<MySqlParameter>();
             MySqlDataAdapter adapter = InitSqlDataAdapter(sqlModel);
 
-            if (sqlModel.ParamsOut.Count != 0)
+            if (sqlModel.ParamsOut != null && sqlModel.ParamsOut.Count != 0)
             {
                 outputParam = SetOutParams(sqlModel, adapter);
             }
@@ -44,8 +45,14 @@ namespace platform.BdMicroservices.service
                 SetInParams(sqlModel, body, adapter);
             }
 
-            adapter.SelectCommand.ExecuteNonQuery();
-            return SetResultDictionary(outputParam);
+            MySqlDataReader dataReader = adapter.SelectCommand.ExecuteReader();
+            Dictionary<string, object> result = SetResultDictionary(outputParam);
+            while (dataReader.Read())
+            {
+                // todo требуется доработка анализирующая ответ функции без указания out.
+                Console.WriteLine(dataReader.GetInt32(0));
+            }
+            return result;
         }
 
         private MySqlDataAdapter InitSqlDataAdapter(SqlModel<MySqlDbType> sqlModel)
