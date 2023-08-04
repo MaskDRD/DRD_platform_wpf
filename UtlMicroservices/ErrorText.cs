@@ -19,7 +19,23 @@ namespace platform.UtlMicroservices
         }
         public static string UserEmailUnique()
         {
-            return "емайл уже существует";
+            return "Емайл уже существует";
+        }
+        public static string UserNotActive()
+        {
+            return "Пользователь забанен";
+        }
+        public static string UserNotConfEmail()
+        {
+            return "Пользователь забанен";
+        }
+        public static string TokenNotValid()
+        {
+            return "Токен не валиден";
+        }
+        public static string TokenTimeNoValid()
+        {
+            return "Срок действия токена закончен";
         }
     }
 }

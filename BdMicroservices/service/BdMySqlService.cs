@@ -3,8 +3,6 @@
 using MySqlConnector;
 using System.Collections.Generic;
 using System.Data;
-using System.Runtime.Remoting.Messaging;
-using System;
 
 namespace platform.BdMicroservices.service
 {
@@ -49,8 +47,13 @@ namespace platform.BdMicroservices.service
             Dictionary<string, object> result = SetResultDictionary(outputParam);
             while (dataReader.Read())
             {
+                for (int i = 0; i < dataReader.FieldCount; i++)
+                {
+                    string name = dataReader.GetName(i);
+                    result.Add(name, dataReader.GetValue(i));                  
+                }
                 // todo требуется доработка анализирующая ответ функции без указания out.
-                Console.WriteLine(dataReader.GetInt32(0));
+
             }
             return result;
         }
