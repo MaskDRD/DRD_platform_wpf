@@ -27,7 +27,7 @@ namespace platform.UtlMicroservices
         }
         public static string UserNotConfEmail()
         {
-            return "Пользователь забанен";
+            return "У вас не подвержденная почта";
         }
         public static string TokenNotValid()
         {
