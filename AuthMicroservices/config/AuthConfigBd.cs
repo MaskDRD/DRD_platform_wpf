@@ -32,12 +32,7 @@ namespace platform.AuthMicroservices.config
                 new SqlParamsInModel("_value", "value"),
                 new SqlParamsInModel("_id_user", "id_user"),
             };
-
-            List<SqlParamsOutModel<MySqlDbType>> sqlParamsOutModel = new List<SqlParamsOutModel<MySqlDbType>>()
-            {
-                new SqlParamsOutModel<MySqlDbType>("id", MySqlDbType.Int64)
-            };
-            SqlModel<MySqlDbType> sqlModel = new SqlModel<MySqlDbType>("TokenCreate", sqlParamsInModel, sqlParamsOutModel);
+            SqlModel<MySqlDbType> sqlModel = new SqlModel<MySqlDbType>("TokenCreate", sqlParamsInModel);
             return sqlModel;
         }
 
@@ -51,11 +46,7 @@ namespace platform.AuthMicroservices.config
                 new SqlParamsInModel("_nik", "nik"),
             };
 
-            List<SqlParamsOutModel<MySqlDbType>> sqlParamsOutModel = new List<SqlParamsOutModel<MySqlDbType>>()
-            {
-                new SqlParamsOutModel<MySqlDbType>("id", MySqlDbType.Int64)
-            };
-            SqlModel<MySqlDbType> sqlModel = new SqlModel<MySqlDbType>("UserCreate", sqlParamsInModel, sqlParamsOutModel);
+            SqlModel<MySqlDbType> sqlModel = new SqlModel<MySqlDbType>("UserCreate", sqlParamsInModel);
             return sqlModel;
         }
 

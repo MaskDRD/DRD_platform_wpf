@@ -3,6 +3,7 @@
 using MySqlConnector;
 using System.Collections.Generic;
 using System.Data;
+using System.Threading.Tasks;
 
 namespace platform.BdMicroservices.service
 {
@@ -13,7 +14,6 @@ namespace platform.BdMicroservices.service
         public BdMySqlService(MySqlConnection dbConnection)
         {
             DbConnection = dbConnection;
-            DbConnection.Open();
         }
 
         public override DataTable GetTablesSql(SqlModel<MySqlDbType> sqlModel, Dictionary<string, object> body)
@@ -28,8 +28,9 @@ namespace platform.BdMicroservices.service
             return dataTable;
         }
 
-        public override Dictionary<string, object> GetDictionarySql(SqlModel<MySqlDbType> sqlModel, Dictionary<string, object> body)
+        async public override Task<Dictionary<string, object>> GetDictionarySql(SqlModel<MySqlDbType> sqlModel, Dictionary<string, object> body)
         {
+            await DbConnection.OpenAsync();
             List<MySqlParameter> outputParam = new List<MySqlParameter>();
             MySqlDataAdapter adapter = InitSqlDataAdapter(sqlModel);
 
@@ -45,16 +46,19 @@ namespace platform.BdMicroservices.service
 
             MySqlDataReader dataReader = adapter.SelectCommand.ExecuteReader();
             Dictionary<string, object> result = SetResultDictionary(outputParam);
-            while (dataReader.Read())
+            if(outputParam.Count == 0)
             {
-                for (int i = 0; i < dataReader.FieldCount; i++)
+                while (dataReader.Read())
                 {
-                    string name = dataReader.GetName(i);
-                    result.Add(name, dataReader.GetValue(i));                  
+                    for (int i = 0; i < dataReader.FieldCount; i++)
+                    {
+                        string name = dataReader.GetName(i);
+                        result.Add(name, dataReader.GetValue(i));
+                    }
+                    // todo требуется доработка анализирующая ответ функции без указания out.
                 }
-                // todo требуется доработка анализирующая ответ функции без указания out.
-
             }
+            await DbConnection.CloseAsync();
             return result;
         }
 

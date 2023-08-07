@@ -3,6 +3,7 @@ using platform.BdMicroservices.model;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Threading.Tasks;
 
 namespace platform.BdMicroservices.service
 {
@@ -16,7 +17,7 @@ namespace platform.BdMicroservices.service
             throw new Exception("Требуется реализация метода GetTablesSql");
         }
 
-        public virtual Dictionary<string, object> GetDictionarySql(
+        public virtual Task<Dictionary<string, object>> GetDictionarySql(
             SqlModel<MySqlDbType> sqlModel, 
             Dictionary<string, object> body
         ) 

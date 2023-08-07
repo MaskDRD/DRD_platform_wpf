@@ -5,6 +5,7 @@ using platform.UtlMicroservices;
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using System.Threading.Tasks;
 
 namespace platform.AuthMicroservices.service
 {
@@ -33,9 +34,9 @@ namespace platform.AuthMicroservices.service
             return Convert.ToBase64String(hash);
         }
 
-        private List<string> CheckUserCreate(Dictionary<string, object> body) {
+        async private Task<List<string>> CheckUserCreate(Dictionary<string, object> body) {
             List<string> errors = new List<string>();
-            Dictionary<string, object> userCheck = bdMySqlService.GetDictionarySql(AuthConfigBd.UserCheck(), body);
+            Dictionary<string, object> userCheck = await bdMySqlService.GetDictionarySql(AuthConfigBd.UserCheck(), body);
             if ((bool)userCheck["check_login_"] == true)
             {
                 errors.Add(ErrorText.UserLoginUnique());
@@ -56,15 +57,15 @@ namespace platform.AuthMicroservices.service
         private List<string> CheckUserGet(DateTime dateToken, Boolean checkActive, Boolean CheckConfEmail, int userId) 
         {
             List<string> errors = new List<string>();
-            if(userId > 0)
+            if(userId < 0)
             {
                 errors.Add(ErrorText.TokenNotValid());
             }
-            if (checkActive)
+            if (!checkActive)
             {
                 errors.Add(ErrorText.UserNotActive());
             }
-            if (CheckConfEmail)
+            if (!CheckConfEmail)
             {
                 errors.Add(ErrorText.UserNotConfEmail());
             }
@@ -75,7 +76,7 @@ namespace platform.AuthMicroservices.service
             return errors;
         }
 
-        public void Register(string login, string password, string nik, string email) {
+        async public void Register(string login, string password, string nik, string email) {
             // подготовка данных;
             Dictionary<string, object> body = new Dictionary<string, object>() 
             {
@@ -85,7 +86,7 @@ namespace platform.AuthMicroservices.service
                 
             };
             // проверка валидации при регистрации
-            List<string> errors = CheckUserCreate(body);
+            List<string> errors = await CheckUserCreate(body);
             if (errors.Count != 0)
             {
                 Console.WriteLine(errors);
@@ -93,8 +94,10 @@ namespace platform.AuthMicroservices.service
             }
             // функционал создания пользователя
             body["password"] = HashPassword(password);
-            Dictionary<string, object> userCreate = bdMySqlService.GetDictionarySql(AuthConfigBd.UserCreate(), body);
-            int id_user = (int)userCreate["id"];
+            Dictionary<string, object> userCreate = await bdMySqlService.GetDictionarySql(AuthConfigBd.UserCreate(), body);
+            Console.WriteLine(userCreate);
+            Console.WriteLine(userCreate["id"]);
+            int.TryParse(userCreate["id"].ToString(), out int id_user);
             // функционал создания токена  
             string token = GenerateToken(id_user);
             Dictionary<string, object> bodyToken = new Dictionary<string, object>
@@ -102,9 +105,9 @@ namespace platform.AuthMicroservices.service
                 { "value", token },
                 { "id_user", id_user }
             };
-            Dictionary<string, object> tokenCreate = bdMySqlService.GetDictionarySql(AuthConfigBd.TokenCreate(), bodyToken);
+            Dictionary<string, object> tokenCreate = await bdMySqlService.GetDictionarySql(AuthConfigBd.TokenCreate(), bodyToken);
 
-            Dictionary<string, object> userGetWhereTokenId = bdMySqlService.GetDictionarySql(AuthConfigBd.UserGetWhereTokenId(), tokenCreate);
+            Dictionary<string, object> userGetWhereTokenId = await bdMySqlService.GetDictionarySql(AuthConfigBd.UserGetWhereTokenId(), tokenCreate);
             List<string> errorsUser =  CheckUserGet(
                 (DateTime)userGetWhereTokenId["token_date"],
                 (bool)userGetWhereTokenId["check_active"],
