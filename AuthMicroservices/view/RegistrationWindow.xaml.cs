@@ -1,4 +1,5 @@
-﻿using System;
+﻿using platform.AuthMicroservices.service;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -35,15 +36,53 @@ namespace platform.AuthMicroservices.view
 
         private void ButtonClick(object sender, RoutedEventArgs e)
         {
-            if (InputLogin.Text == "")
+            bool checkError = false;
+            if (Login.Value == "")
             {
-                TextErrorNullLogin.Visibility = Visibility.Visible;
+                Login.UpdateVisibleTextError();
+                checkError = true;
             }
 
-            if (InputPassword.Password == "")
+            if (Password.Value == "")
             {
-                TextErrorNullPassword.Visibility = Visibility.Visible;
+                Password.UpdateVisibleTextError();
+                checkError = true;
             }
+
+            if (PasswordRepeat.Value == "")
+            {
+                PasswordRepeat.UpdateVisibleTextError();
+                checkError = true;
+            }
+
+            if (Email.Value == "")
+            {
+                Email.UpdateVisibleTextError();
+                checkError = true;
+            }
+
+            if (Nik.Value == "")
+            {
+                Nik.UpdateVisibleTextError();
+                checkError = true;
+            }
+
+            if(Password.Value != PasswordRepeat.Value)
+            {
+                checkError = true;
+            }
+            
+            if (checkError == true)
+            {
+                return;
+            }
+
+            AuthService.Instance.Register(
+                Login.Value,
+                Password.Value,
+                Email.Value,
+                Nik.Value
+            );
         }
 
     }

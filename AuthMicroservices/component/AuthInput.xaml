@@ -8,32 +8,32 @@
              Loaded="AuthInputUserComponentLoaded"
              >
     <StackPanel>
-        <Label 
-                x:Name="label" 
-                Target="{Binding ElementName = Input }" 
-                Content="{ Binding ElementName = AuthInputUserComponent, Path = LabelText }"
-                MouseLeftButtonUp="LabelMouseLeftButtonUp"
-            />
+        <Label
+            x:Name="label" 
+            Target="{Binding ElementName = Input }" 
+            Content="{ Binding ElementName = AuthInputUserComponent, Path = LabelText }"
+            MouseLeftButtonUp="LabelMouseLeftButtonUp"
+        />
 
         <TextBox 
-                FontSize="16px" 
-                x:Name="Input" Width="250px" 
-                TextChanged="InputTextChanged"
-                Visibility="Collapsed" 
-            />
+            FontSize="16px" 
+            x:Name="Input" Width="250px" 
+            TextChanged="InputTextChanged"
+            Visibility="Collapsed" 
+        />
 
         <PasswordBox 
-                FontSize="16px" 
-                x:Name="Password" Width="250px" 
-                PasswordChanged="PasswordChanged"
-                Visibility="Collapsed" 
-            />
+            FontSize="16px" 
+            x:Name="Password" Width="250px" 
+            PasswordChanged="PasswordChanged"
+            Visibility="Collapsed" 
+        />
 
         <TextBlock 
-                x:Name="TextError" 
-                Visibility="Collapsed" 
-                Text="{ Binding ElementName = AuthInputUserComponent, Path = ErrorReqText }" 
-                Foreground="Red"
-            />
+            x:Name="TextError" 
+            Visibility="Collapsed" 
+            Text="{ Binding ElementName = AuthInputUserComponent, Path = ErrorReqText }"
+            Foreground="Red"
+        />
     </StackPanel>
 </UserControl>

@@ -16,7 +16,7 @@ namespace platform.AuthMicroservices.view
             InitializeComponent();
         }
 
-        private void ButtonClick(object sender, RoutedEventArgs e)
+        private void ButtonClickBxod(object sender, RoutedEventArgs e)
         {
            if(Login.Value == "")
             {
@@ -26,6 +26,11 @@ namespace platform.AuthMicroservices.view
             {
                 Password.UpdateVisibleTextError();
             }
+        }
+        private void ButtonClickRegister(object sender, RoutedEventArgs e)
+        {
+            RegistrationWindow authorizationWindow = new RegistrationWindow();
+            authorizationWindow.Show();
         }
     }
 }
